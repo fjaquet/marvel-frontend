@@ -5,6 +5,7 @@ import "../styles/pages/characters.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
+import addToFavorites from "../utils/manageFavorites";
 
 const CharactersPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -48,13 +49,22 @@ const CharactersPage = () => {
             <h1>MARVEL CHARACTERS LIST</h1>
             <Search search={searchCharacter} setSearch={setSearchCharacter} />
             {characters.map((elt) => (
-              <Link key={elt._id} to={`/character/${elt._id}`}>
-                <CharacterCard
-                  picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-                  name={elt.name}
-                  description={elt.description}
-                />
-              </Link>
+              <div key={elt._id}>
+                <Link to={`/character/${elt._id}`}>
+                  <CharacterCard
+                    picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                    name={elt.name}
+                    description={elt.description}
+                  />
+                </Link>
+                <button
+                  onClick={() => {
+                    addToFavorites("favorite_characters", elt._id);
+                  }}
+                >
+                  Add to favorites
+                </button>
+              </div>
             ))}
           </div>
           <Pagination count={count} page={page} setPage={setPage} />

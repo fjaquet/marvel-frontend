@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import ComicCard from "../components/ComicCard";
+import addToFavorites from "../utils/manageFavorites";
 
 const CharacterPage = () => {
   const { id } = useParams();
@@ -28,11 +29,13 @@ const CharacterPage = () => {
         const comicTab = [];
 
         for (const comicId of comicList) {
-          let co = await axios({
-            method: "get",
-            url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/comic/${comicId}`,
-          });
-          comicTab.push(co.data);
+          if (comicId) {
+            let co = await axios({
+              method: "get",
+              url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/comic/${comicId}`,
+            });
+            comicTab.push(co.data);
+          }
         }
 
         setComics(comicTab);
@@ -58,13 +61,21 @@ const CharacterPage = () => {
             src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
             alt={character.name}
           />
+          <button
+            onClick={() => {
+              addToFavorites("favorite_characters", character._id);
+            }}
+          >
+            Add to favorites
+          </button>
           {comics.map((elt) => (
-            <ComicCard
-              key={elt._id}
-              picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-              title={elt.title}
-              description={elt.description}
-            />
+            <div key={elt._id}>
+              <ComicCard
+                picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                title={elt.title}
+                description={elt.description}
+              />
+            </div>
           ))}
         </main>
       )}

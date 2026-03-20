@@ -4,6 +4,7 @@ import ComicCard from "../components/ComicCard";
 import "../styles/pages/comics.css";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
+import addToFavorites from "../utils/manageFavorites";
 
 const ComicsPage = () => {
   const VITE_API_PROTOCOL = import.meta.env.VITE_API_PROTOCOL;
@@ -47,12 +48,20 @@ const ComicsPage = () => {
             <h1>MARVEL COMICS LIST</h1>
             <Search search={searchComic} setSearch={setSearchComic} />
             {comics.map((elt) => (
-              <ComicCard
-                key={elt._id}
-                picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-                title={elt.title}
-                description={elt.description}
-              />
+              <div key={elt._id}>
+                <ComicCard
+                  picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                  title={elt.title}
+                  description={elt.description}
+                />
+                <button
+                  onClick={() => {
+                    addToFavorites("favorite_comics", elt._id);
+                  }}
+                >
+                  Add to favorites
+                </button>
+              </div>
             ))}
           </div>
           <Pagination count={count} page={page} setPage={setPage} />
