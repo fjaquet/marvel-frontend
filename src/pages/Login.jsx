@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios({
+      const response = await axios({
         method: "post",
         url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/user/login`,
         data: {
@@ -30,7 +31,11 @@ const LoginPage = () => {
         },
       });
 
-      navigate("/publish");
+      Cookies.set("56879_marvel_access_token", response.data.token, {
+        expires: 7,
+      });
+
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

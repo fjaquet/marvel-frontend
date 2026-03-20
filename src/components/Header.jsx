@@ -1,10 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import logo from "../assets/img/marvelLogo.png";
 import "../styles/components/header.css";
 
 const Header = () => {
   const navigate = useNavigate();
+  const token = Cookies.get("56879_marvel_access_token");
 
   return (
     <header>
@@ -23,24 +25,39 @@ const Header = () => {
             </li>
           </ul>
         </nav>
-        <div className="header__auth">
-          <button
-            className="header__btn"
-            onClick={() => {
-              navigate("/signup");
-            }}
-          >
-            S'inscrire
-          </button>
-          <button
-            className="header__btn"
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            Se connecter
-          </button>
-        </div>
+
+        {!token ? (
+          <div className="header__auth">
+            <button
+              className="header__btn"
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Signup
+            </button>
+            <button
+              className="header__btn"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </button>
+          </div>
+        ) : (
+          <div className="header__auth">
+            <button
+              className="header__btn"
+              onClick={() => {
+                Cookies.remove("56879_marvel_access_token");
+                navigate("/");
+              }}
+            >
+              Disconnect
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

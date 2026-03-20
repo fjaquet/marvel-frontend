@@ -48,7 +48,7 @@ const CharactersPage = () => {
             <h1>MARVEL CHARACTERS LIST</h1>
             <Search search={searchCharacter} setSearch={setSearchCharacter} />
             {characters.map((elt) => (
-              <Link key={elt._id} to={`character/${elt._id}`}>
+              <Link key={elt._id} to={`/character/${elt._id}`}>
                 <CharacterCard
                   picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
                   name={elt.name}

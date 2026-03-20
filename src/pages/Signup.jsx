@@ -1,16 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const formData = new FormData();
-  formData.append("email", email);
-  formData.append("username", username);
-  formData.append("password", password);
 
   const VITE_API_PROTOCOL = import.meta.env.VITE_API_PROTOCOL;
   const VITE_API_FQDN = import.meta.env.VITE_API_FQDN;
@@ -27,10 +23,18 @@ const SignupPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios({
+      const response = await axios({
         method: "post",
         url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/user/signup`,
-        data: formData,
+        data: {
+          username,
+          email,
+          password,
+        },
+      });
+
+      Cookies.set("56879_marvel_access_token", response.data.token, {
+        expires: 7,
       });
 
       navigate("/");
