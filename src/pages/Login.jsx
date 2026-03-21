@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import "../styles/pages/shared/auth.css";
+import errorHandler from "../utils/errorHandler";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ const LoginPage = () => {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      errorHandler(error);
     }
   };
 

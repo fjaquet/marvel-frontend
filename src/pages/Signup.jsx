@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import errorHandler from "../utils/errorHandler";
 import "../styles/pages/shared/auth.css";
 
 const SignupPage = () => {
@@ -40,7 +41,7 @@ const SignupPage = () => {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      errorHandler(error);
     }
   };
 
