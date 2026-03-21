@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "../styles/pages/shared/auth.css";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -42,32 +43,37 @@ const LoginPage = () => {
   };
 
   return (
-    <main>
-      <div className="signup-page__container">
-        <h1>Se connecter</h1>
-        <form onSubmit={handleSubmit}>
+    <main className="auth-page">
+      <div className="container auth-container">
+        <h1 className="auth-title">LOGIN</h1>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <input
-            className="signup-form__input"
+            className="auth-form__input"
             type="email"
             name="Adresse email"
             id="email"
-            placeholder="Email"
+            placeholder="EMAIL"
             value={email}
             onChange={handleChange(setEmail)}
           />
           <input
-            className="signup-form__input"
+            className="auth-form__input"
             type="password"
             name="password"
             id="password"
-            placeholder="Mot de passe"
+            placeholder="PASSWORD"
             value={password}
             onChange={handleChange(setPassword)}
           />
 
-          <button>Se connecter</button>
+          <button className="auth-btn">Log in</button>
         </form>
-        <Link to="/signup">Signup</Link>
+        <div className="auth-switch">
+          <p className="auth-switch__text">Don't have an account? </p>
+          <Link className="auth-link" to="/signup">
+            Sign up
+          </Link>
+        </div>
       </div>
     </main>
   );

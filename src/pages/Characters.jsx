@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CharacterCard from "../components/CharacterCard";
-import "../styles/pages/characters.css";
+import "../styles/pages/shared/listing.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
@@ -40,34 +40,40 @@ const CharactersPage = () => {
   return (
     <>
       {isLoading ? (
-        <main className="characters-page">
+        <main className="listing-page">
           <p>Is loading...</p>
         </main>
       ) : (
-        <main className="characters-page">
-          <div className="container characters-container">
-            <h1>MARVEL CHARACTERS LIST</h1>
-            <Search search={searchCharacter} setSearch={setSearchCharacter} />
-            {characters.map((elt) => (
-              <div key={elt._id}>
-                <Link to={`/character/${elt._id}`}>
-                  <CharacterCard
-                    picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-                    name={elt.name}
-                    description={elt.description}
-                  />
-                </Link>
-                <button
-                  onClick={() => {
-                    addToFavorites("favorite_characters", elt._id);
-                  }}
-                >
-                  Add to favorites
-                </button>
-              </div>
-            ))}
+        <main className="listing-page">
+          <div className="container listing-container">
+            <div className="listing-header">
+              <h1 className="listing-title">CHARACTERS</h1>
+              <Search search={searchCharacter} setSearch={setSearchCharacter} />
+            </div>
+
+            <div className="listing-grid">
+              {characters.map((elt) => (
+                <div className="listing-card" key={elt._id}>
+                  <Link className="listing-link" to={`/character/${elt._id}`}>
+                    <CharacterCard
+                      picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                      name={elt.name}
+                      description={elt.description}
+                    />
+                  </Link>
+                  <button
+                    className="listing-favorite-btn"
+                    onClick={() => {
+                      addToFavorites("favorite_characters", elt._id);
+                    }}
+                  >
+                    Add to favorites
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Pagination count={count} page={page} setPage={setPage} />
           </div>
-          <Pagination count={count} page={page} setPage={setPage} />
         </main>
       )}
     </>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ComicCard from "../components/ComicCard";
-import "../styles/pages/comics.css";
+import "../styles/pages/shared/listing.css";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 import addToFavorites from "../utils/manageFavorites";
@@ -39,32 +39,37 @@ const ComicsPage = () => {
   return (
     <>
       {isLoading ? (
-        <main className="comics-page">
+        <main className="listing-page">
           <p>Is loading...</p>
         </main>
       ) : (
-        <main className="comics-page">
-          <div className="container comics-container">
-            <h1>MARVEL COMICS LIST</h1>
-            <Search search={searchComic} setSearch={setSearchComic} />
-            {comics.map((elt) => (
-              <div key={elt._id}>
-                <ComicCard
-                  picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-                  title={elt.title}
-                  description={elt.description}
-                />
-                <button
-                  onClick={() => {
-                    addToFavorites("favorite_comics", elt._id);
-                  }}
-                >
-                  Add to favorites
-                </button>
-              </div>
-            ))}
+        <main className="listing-page">
+          <div className="container listing-container">
+            <div className="listing-header">
+              <h1 className="listing-title">COMICS</h1>
+              <Search search={searchComic} setSearch={setSearchComic} />
+            </div>
+            <div className="listing-grid">
+              {comics.map((elt) => (
+                <div className="listing-card" key={elt._id}>
+                  <ComicCard
+                    picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                    title={elt.title}
+                    description={elt.description}
+                  />
+                  <button
+                    className="listing-favorite-btn"
+                    onClick={() => {
+                      addToFavorites("favorite_comics", elt._id);
+                    }}
+                  >
+                    Add to favorites
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Pagination count={count} page={page} setPage={setPage} />
           </div>
-          <Pagination count={count} page={page} setPage={setPage} />
         </main>
       )}
     </>

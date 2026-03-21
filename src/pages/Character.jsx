@@ -4,6 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import ComicCard from "../components/ComicCard";
 import addToFavorites from "../utils/manageFavorites";
+import "../styles/pages/shared/listing.css";
+import "../styles/pages/character.css";
 
 const CharacterPage = () => {
   const { id } = useParams();
@@ -55,28 +57,55 @@ const CharacterPage = () => {
         </main>
       ) : (
         <main className="characters-page">
-          <h1>{character.name}</h1>
-          <p>{character.description}</p>
-          <img
-            src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-            alt={character.name}
-          />
-          <button
-            onClick={() => {
-              addToFavorites("favorite_characters", character._id);
-            }}
-          >
-            Add to favorites
-          </button>
-          {comics.map((elt) => (
-            <div key={elt._id}>
-              <ComicCard
-                picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-                title={elt.title}
-                description={elt.description}
-              />
+          <div className="container listing-container">
+            <section className="character-hero">
+              <div className="character-hero__media">
+                <img
+                  className="character-hero__image"
+                  src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                  alt={character.name}
+                />{" "}
+                <button
+                  className="listing-favorite-btn character-hero__btn"
+                  onClick={() => {
+                    addToFavorites("favorite_characters", character._id);
+                  }}
+                >
+                  Add to favorites
+                </button>
+              </div>
+
+              <aside className="character-hero__content">
+                <h1 className="character-hero__name">{character.name}</h1>
+                <p className="character-hero__description">
+                  {character.description}
+                </p>
+              </aside>
+            </section>
+            <div className="listing-header">
+              <h2 className="listing-title">COMICS</h2>
             </div>
-          ))}
+
+            <div className="listing-grid">
+              {comics.map((elt) => (
+                <div key={elt._id} className="listing-card">
+                  <ComicCard
+                    picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                    title={elt.title}
+                    description={elt.description}
+                  />
+                  <button
+                    className="listing-favorite-btn"
+                    onClick={() => {
+                      addToFavorites("favorite_comics", elt._id);
+                    }}
+                  >
+                    Add to favorites
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </main>
       )}
     </>

@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import "../styles/pages/shared/auth.css";
 
 const SignupPage = () => {
   const [username, setUsername] = useState("");
@@ -44,41 +45,46 @@ const SignupPage = () => {
   };
 
   return (
-    <main>
-      <div className="signup-page__container">
-        <h1>S'inscrire</h1>
-        <form onSubmit={handleSubmit}>
+    <main className="auth-page">
+      <div className="container auth-container">
+        <h1 className="auth-title">SIGN UP</h1>
+        <form className="auth-form" onSubmit={handleSubmit}>
           <input
-            className="signup-form__input"
+            className="auth-form__input"
             type="text"
             name="username"
             id="username"
-            placeholder="Nom d'utilisateur"
+            placeholder="USERNAME"
             value={username}
             onChange={handleChange(setUsername)}
           />
           <input
-            className="signup-form__input"
+            className="auth-form__input"
             type="email"
             name="email"
             id="email"
-            placeholder="Email"
+            placeholder="EMAIL"
             value={email}
             onChange={handleChange(setEmail)}
           />
           <input
-            className="signup-form__input"
+            className="auth-form__input"
             type="password"
             name="password"
             id="password"
-            placeholder="Mot de passe"
+            placeholder="PASSWORD"
             value={password}
             onChange={handleChange(setPassword)}
           />
 
-          <button>S'inscrire</button>
+          <button className="auth-btn">Sign up</button>
         </form>
-        <Link to="/login">login</Link>
+        <div className="auth-switch">
+          <p className="auth-switch__text">Already have an account? </p>
+          <Link className="auth-link" to="/login">
+            Log in
+          </Link>
+        </div>
       </div>
     </main>
   );

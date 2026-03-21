@@ -1,0 +1,9 @@
+:root {
+  --color-bg: #f6f0da;
+  --color-red: #ed1d24;
+  --color-accent: #f1be25;
+  --color-muted: #777;
+
+  --font-display: "Impact", "Arial Black", sans-serif;
+  --font-style-brand: italic;
+}

@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import CharacterCard from "../components/CharacterCard";
 import ComicCard from "../components/ComicCard";
 import { Link } from "react-router-dom";
+import "../styles/pages/shared/listing.css";
+import "../styles/pages/favorites.css";
 
 const FavoritesPage = () => {
   const token = Cookies.get("56879_marvel_access_token");
@@ -78,7 +80,7 @@ const FavoritesPage = () => {
           authorization: `Bearer ${token}`,
         },
       });
-      // console.log(response);
+
       if (favorite_type === "favorite_characters") {
         setFavoriteCharacters((prev) => prev.filter((item) => item._id !== id));
       } else if (favorite_type === "favorite_comics") {
@@ -95,50 +97,64 @@ const FavoritesPage = () => {
 
   return token ? (
     isLoading ? (
-      <main>
-        <p>Is loading...</p>
+      <main className="listing-page">
+        <div className="container characters-container favorites-container">
+          <p>Is loading...</p>
+        </div>
       </main>
     ) : (
-      <main>
-        <h2>Favorites characters</h2>
-        <div>
-          {favoriteCharacters.map((elt) => (
-            <div key={elt._id}>
-              <Link to={`/character/${elt._id}`}>
-                <CharacterCard
+      <main className="listing-page">
+        <div className="container characters-container favorites-container">
+          <div className="listing-header favorites-header">
+            <h2 className="listing-title">FAVORITES CHARACTERS</h2>
+          </div>
+          <div>
+            <div className="listing-grid">
+              {favoriteCharacters.map((elt) => (
+                <div className="listing-card" key={elt._id}>
+                  <Link className="listing-link" to={`/character/${elt._id}`}>
+                    <CharacterCard
+                      picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                      name={elt.name}
+                      description={elt.description}
+                    />
+                  </Link>
+                  <button
+                    className="listing-favorite-btn delete-btn"
+                    onClick={() => {
+                      delFromFavorites("favorite_characters", elt._id);
+                    }}
+                  >
+                    Remove from favorites
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="listing-header favorites-header">
+            <h2 className="listing-title">FAVORITES COMICS</h2>
+          </div>
+          <div className="listing-grid">
+            {favoriteComics.map((elt) => (
+              <div className="listing-card" key={elt._id}>
+                <ComicCard
                   picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-                  name={elt.name}
+                  title={elt.title}
                   description={elt.description}
                 />
-              </Link>
-              <button
-                onClick={() => {
-                  delFromFavorites("favorite_characters", elt._id);
-                }}
-              >
-                Remove from favorites
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <h2>Favorites comics</h2>
-        {favoriteComics.map((elt) => (
-          <div key={elt._id}>
-            <ComicCard
-              picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
-              title={elt.title}
-              description={elt.description}
-            />
-            <button
-              onClick={() => {
-                delFromFavorites("favorite_comics", elt._id);
-              }}
-            >
-              Remove from favorites
-            </button>
+                <button
+                  className="listing-favorite-btn delete-btn"
+                  onClick={() => {
+                    delFromFavorites("favorite_comics", elt._id);
+                  }}
+                >
+                  Remove from favorites
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </main>
     )
   ) : (

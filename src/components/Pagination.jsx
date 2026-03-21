@@ -1,3 +1,5 @@
+import "../styles/components/pagination.css";
+
 const Pagination = ({ count, page, setPage }) => {
   const totalPages = Math.ceil(count / 100);
 
