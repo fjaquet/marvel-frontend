@@ -39,7 +39,9 @@ const FavoritesPage = () => {
             method: "get",
             url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/character/${favoriteCharactersIds[i]}`,
           });
-          newFavoriteCharacters.push(response.data);
+          if (response.data) {
+            newFavoriteCharacters.push(response.data);
+          }
         }
         setFavoriteCharacters(newFavoriteCharacters);
         //get Comics
@@ -58,7 +60,9 @@ const FavoritesPage = () => {
             method: "get",
             url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/comic/${favoriteComicsIds[i]}`,
           });
-          newFavoriteComics.push(response.data);
+          if (response.data) {
+            newFavoriteComics.push(response.data);
+          }
         }
 
         setFavoriteComics(newFavoriteComics);

@@ -17,10 +17,11 @@ const addToFavorites = async (favorite_type, id) => {
           authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
+
+      return { sucess: true, message: response.data?.message || "" };
     } catch (error) {
       if (error.response.status == 409) {
-        console.log(error.response.data.message);
+        return { sucess: false, message: error.response.data?.message || "" };
       } else {
         console.log(error);
       }

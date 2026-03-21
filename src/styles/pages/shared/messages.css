@@ -1,0 +1,18 @@
+.favorite-feedback {
+  position: fixed;
+  z-index: 20;
+  left: 20%;
+  top: 50%;
+  font-size: 4.5rem;
+  font-weight: 900;
+  font-family: var(--font-display);
+  font-style: var(--font-style-brand);
+}
+
+.favorite-feedback--success {
+  color: var(--color-accent);
+}
+
+.favorite-feedback--error {
+  color: var(--color-red);
+}

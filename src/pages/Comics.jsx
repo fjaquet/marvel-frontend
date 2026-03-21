@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ComicCard from "../components/ComicCard";
 import "../styles/pages/shared/listing.css";
+import "../styles/pages/shared/messages.css";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 import addToFavorites from "../utils/manageFavorites";
@@ -16,6 +17,8 @@ const ComicsPage = () => {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [searchComic, setSearchComic] = useState("");
+  const [favoriteMessage, setFavoriteMessage] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,8 +62,16 @@ const ComicsPage = () => {
                   />
                   <button
                     className="listing-favorite-btn"
-                    onClick={() => {
-                      addToFavorites("favorite_comics", elt._id);
+                    onClick={async () => {
+                      const reponse = await addToFavorites(
+                        "favorite_comics",
+                        elt._id,
+                        setFavoriteMessage,
+                      );
+                      setFavoriteMessage(reponse.message);
+                      setMessageSuccess(reponse.sucess);
+
+                      setTimeout(() => setFavoriteMessage(""), 1500);
                     }}
                   >
                     Add to favorites
@@ -70,6 +81,16 @@ const ComicsPage = () => {
             </div>
             <Pagination count={count} page={page} setPage={setPage} />
           </div>
+          {favoriteMessage &&
+            (messageSuccess ? (
+              <p className="favorite-feedback favorite-feedback--success">
+                {favoriteMessage}
+              </p>
+            ) : (
+              <p className="favorite-feedback favorite-feedback--error">
+                {favoriteMessage}
+              </p>
+            ))}
         </main>
       )}
     </>

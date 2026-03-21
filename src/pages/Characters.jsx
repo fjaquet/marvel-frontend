@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CharacterCard from "../components/CharacterCard";
 import "../styles/pages/shared/listing.css";
+import "../styles/pages/shared/messages.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
@@ -13,6 +14,8 @@ const CharactersPage = () => {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [searchCharacter, setSearchCharacter] = useState("");
+  const [favoriteMessage, setFavoriteMessage] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState(true);
 
   const VITE_API_PROTOCOL = import.meta.env.VITE_API_PROTOCOL;
   const VITE_API_FQDN = import.meta.env.VITE_API_FQDN;
@@ -63,8 +66,16 @@ const CharactersPage = () => {
                   </Link>
                   <button
                     className="listing-favorite-btn"
-                    onClick={() => {
-                      addToFavorites("favorite_characters", elt._id);
+                    onClick={async () => {
+                      const reponse = await addToFavorites(
+                        "favorite_characters",
+                        elt._id,
+                        setFavoriteMessage,
+                      );
+                      setFavoriteMessage(reponse.message);
+                      setMessageSuccess(reponse.sucess);
+
+                      setTimeout(() => setFavoriteMessage(""), 1500);
                     }}
                   >
                     Add to favorites
@@ -72,8 +83,19 @@ const CharactersPage = () => {
                 </div>
               ))}
             </div>
+
             <Pagination count={count} page={page} setPage={setPage} />
           </div>
+          {favoriteMessage &&
+            (messageSuccess ? (
+              <p className="favorite-feedback favorite-feedback--success">
+                {favoriteMessage}
+              </p>
+            ) : (
+              <p className="favorite-feedback favorite-feedback--error">
+                {favoriteMessage}
+              </p>
+            ))}
         </main>
       )}
     </>

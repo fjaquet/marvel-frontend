@@ -6,6 +6,7 @@ import ComicCard from "../components/ComicCard";
 import addToFavorites from "../utils/manageFavorites";
 import "../styles/pages/shared/listing.css";
 import "../styles/pages/character.css";
+import "../styles/pages/shared/messages.css";
 
 const CharacterPage = () => {
   const { id } = useParams();
@@ -13,6 +14,8 @@ const CharacterPage = () => {
   const [character, setCharacter] = useState({});
   const [comics, setComics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [favoriteMessage, setFavoriteMessage] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState(true);
 
   const VITE_API_PROTOCOL = import.meta.env.VITE_API_PROTOCOL;
   const VITE_API_FQDN = import.meta.env.VITE_API_FQDN;
@@ -67,8 +70,16 @@ const CharacterPage = () => {
                 />{" "}
                 <button
                   className="listing-favorite-btn character-hero__btn"
-                  onClick={() => {
-                    addToFavorites("favorite_characters", character._id);
+                  onClick={async () => {
+                    const reponse = await addToFavorites(
+                      "favorite_characters",
+                      character._id,
+                      setFavoriteMessage,
+                    );
+                    setFavoriteMessage(reponse.message);
+                    setMessageSuccess(reponse.sucess);
+
+                    setTimeout(() => setFavoriteMessage(""), 1500);
                   }}
                 >
                   Add to favorites
@@ -96,8 +107,16 @@ const CharacterPage = () => {
                   />
                   <button
                     className="listing-favorite-btn"
-                    onClick={() => {
-                      addToFavorites("favorite_comics", elt._id);
+                    onClick={async () => {
+                      const reponse = await addToFavorites(
+                        "favorite_comics",
+                        elt._id,
+                        setFavoriteMessage,
+                      );
+                      setFavoriteMessage(reponse.message);
+                      setMessageSuccess(reponse.sucess);
+
+                      setTimeout(() => setFavoriteMessage(""), 1500);
                     }}
                   >
                     Add to favorites
@@ -106,6 +125,16 @@ const CharacterPage = () => {
               ))}
             </div>
           </div>
+          {favoriteMessage &&
+            (messageSuccess ? (
+              <p className="favorite-feedback favorite-feedback--success">
+                {favoriteMessage}
+              </p>
+            ) : (
+              <p className="favorite-feedback favorite-feedback--error">
+                {favoriteMessage}
+              </p>
+            ))}
         </main>
       )}
     </>
