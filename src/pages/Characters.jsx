@@ -77,8 +77,8 @@ const CharactersPage = () => {
                         elt._id,
                         setFavoriteMessage,
                       );
-                      setFavoriteMessage(reponse.message);
-                      setMessageSuccess(reponse.sucess);
+                      setFavoriteMessage(reponse?.message);
+                      setMessageSuccess(reponse?.sucess);
 
                       setTimeout(() => setFavoriteMessage(""), 1500);
                     }}

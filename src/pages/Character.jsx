@@ -76,8 +76,8 @@ const CharacterPage = () => {
                       character._id,
                       setFavoriteMessage,
                     );
-                    setFavoriteMessage(reponse.message);
-                    setMessageSuccess(reponse.sucess);
+                    setFavoriteMessage(reponse?.message);
+                    setMessageSuccess(reponse?.sucess);
 
                     setTimeout(() => setFavoriteMessage(""), 1500);
                   }}
@@ -113,8 +113,8 @@ const CharacterPage = () => {
                         elt._id,
                         setFavoriteMessage,
                       );
-                      setFavoriteMessage(reponse.message);
-                      setMessageSuccess(reponse.sucess);
+                      setFavoriteMessage(reponse?.message);
+                      setMessageSuccess(reponse?.sucess);
 
                       setTimeout(() => setFavoriteMessage(""), 1500);
                     }}
