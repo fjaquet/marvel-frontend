@@ -1,7 +1,10 @@
 import "../styles/components/search.css";
 
-const Search = ({ search, setSearch }) => {
+const Search = ({ search, setSearch, page, setPage }) => {
   const handleChangeSearch = (event) => {
+    if (page !== 1) {
+      setPage(1);
+    }
     setSearch(event.target.value);
   };
 

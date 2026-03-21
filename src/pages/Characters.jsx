@@ -51,7 +51,12 @@ const CharactersPage = () => {
           <div className="container listing-container">
             <div className="listing-header">
               <h1 className="listing-title">CHARACTERS</h1>
-              <Search search={searchCharacter} setSearch={setSearchCharacter} />
+              <Search
+                search={searchCharacter}
+                setSearch={setSearchCharacter}
+                page={page}
+                setPage={setPage}
+              />
             </div>
 
             <div className="listing-grid">

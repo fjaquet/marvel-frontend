@@ -50,7 +50,12 @@ const ComicsPage = () => {
           <div className="container listing-container">
             <div className="listing-header">
               <h1 className="listing-title">COMICS</h1>
-              <Search search={searchComic} setSearch={setSearchComic} />
+              <Search
+                search={searchComic}
+                setSearch={setSearchComic}
+                page={page}
+                setPage={setPage}
+              />
             </div>
             <div className="listing-grid">
               {comics.map((elt) => (
