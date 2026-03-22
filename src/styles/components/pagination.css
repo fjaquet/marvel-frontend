@@ -32,7 +32,10 @@
     box-shadow 0.1s;
 }
 
-.pagination__button:hover,
-.pagination__button:focus {
+.pagination__button:hover {
+  background-color: var(--color-accent);
+}
+
+.pagination-current__button {
   background-color: var(--color-accent);
 }

@@ -7,6 +7,7 @@ import ComicCard from "../components/ComicCard";
 import { Link } from "react-router-dom";
 import "../styles/pages/shared/listing.css";
 import "../styles/pages/favorites.css";
+import Loader from "../components/Loader";
 
 const FavoritesPage = () => {
   const token = Cookies.get("56879_marvel_access_token");
@@ -39,7 +40,9 @@ const FavoritesPage = () => {
             method: "get",
             url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/character/${favoriteCharactersIds[i]}`,
           });
-          newFavoriteCharacters.push(response.data);
+          if (response.data) {
+            newFavoriteCharacters.push(response.data);
+          }
         }
         setFavoriteCharacters(newFavoriteCharacters);
         //get Comics
@@ -58,7 +61,9 @@ const FavoritesPage = () => {
             method: "get",
             url: `${VITE_API_PROTOCOL}://${VITE_API_FQDN}:${VITE_API_PORT}/comic/${favoriteComicsIds[i]}`,
           });
-          newFavoriteComics.push(response.data);
+          if (response.data) {
+            newFavoriteComics.push(response.data);
+          }
         }
 
         setFavoriteComics(newFavoriteComics);
@@ -99,7 +104,7 @@ const FavoritesPage = () => {
     isLoading ? (
       <main className="listing-page">
         <div className="container characters-container favorites-container">
-          <p>Is loading...</p>
+          <Loader />
         </div>
       </main>
     ) : (
@@ -114,7 +119,7 @@ const FavoritesPage = () => {
                 <div className="listing-card" key={elt._id}>
                   <Link className="listing-link" to={`/character/${elt._id}`}>
                     <CharacterCard
-                      picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                      picture={`${elt.thumbnail.path}/portrait_uncanny.${elt.thumbnail.extension}`}
                       name={elt.name}
                       description={elt.description}
                     />
@@ -139,7 +144,7 @@ const FavoritesPage = () => {
             {favoriteComics.map((elt) => (
               <div className="listing-card" key={elt._id}>
                 <ComicCard
-                  picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                  picture={`${elt.thumbnail.path}/portrait_uncanny.${elt.thumbnail.extension}`}
                   title={elt.title}
                   description={elt.description}
                 />

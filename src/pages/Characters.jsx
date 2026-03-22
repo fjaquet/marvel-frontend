@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CharacterCard from "../components/CharacterCard";
 import "../styles/pages/shared/listing.css";
+import "../styles/pages/shared/messages.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import addToFavorites from "../utils/manageFavorites";
+import Loader from "../components/Loader";
 
 const CharactersPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +15,8 @@ const CharactersPage = () => {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
   const [searchCharacter, setSearchCharacter] = useState("");
+  const [favoriteMessage, setFavoriteMessage] = useState("");
+  const [messageSuccess, setMessageSuccess] = useState(true);
 
   const VITE_API_PROTOCOL = import.meta.env.VITE_API_PROTOCOL;
   const VITE_API_FQDN = import.meta.env.VITE_API_FQDN;
@@ -41,14 +45,19 @@ const CharactersPage = () => {
     <>
       {isLoading ? (
         <main className="listing-page">
-          <p>Is loading...</p>
+          <Loader />
         </main>
       ) : (
         <main className="listing-page">
           <div className="container listing-container">
             <div className="listing-header">
               <h1 className="listing-title">CHARACTERS</h1>
-              <Search search={searchCharacter} setSearch={setSearchCharacter} />
+              <Search
+                search={searchCharacter}
+                setSearch={setSearchCharacter}
+                page={page}
+                setPage={setPage}
+              />
             </div>
 
             <div className="listing-grid">
@@ -56,15 +65,23 @@ const CharactersPage = () => {
                 <div className="listing-card" key={elt._id}>
                   <Link className="listing-link" to={`/character/${elt._id}`}>
                     <CharacterCard
-                      picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                      picture={`${elt.thumbnail.path}/portrait_uncanny.${elt.thumbnail.extension}`}
                       name={elt.name}
                       description={elt.description}
                     />
                   </Link>
                   <button
                     className="listing-favorite-btn"
-                    onClick={() => {
-                      addToFavorites("favorite_characters", elt._id);
+                    onClick={async () => {
+                      const reponse = await addToFavorites(
+                        "favorite_characters",
+                        elt._id,
+                        setFavoriteMessage,
+                      );
+                      setFavoriteMessage(reponse?.message);
+                      setMessageSuccess(reponse?.sucess);
+
+                      setTimeout(() => setFavoriteMessage(""), 1500);
                     }}
                   >
                     Add to favorites
@@ -72,8 +89,19 @@ const CharactersPage = () => {
                 </div>
               ))}
             </div>
+
             <Pagination count={count} page={page} setPage={setPage} />
           </div>
+          {favoriteMessage &&
+            (messageSuccess ? (
+              <p className="favorite-feedback favorite-feedback--success">
+                {favoriteMessage}
+              </p>
+            ) : (
+              <p className="favorite-feedback favorite-feedback--error">
+                {favoriteMessage}
+              </p>
+            ))}
         </main>
       )}
     </>

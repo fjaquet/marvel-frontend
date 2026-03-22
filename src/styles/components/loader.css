@@ -1,0 +1,58 @@
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.loader-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px;
+  background: var(--color-accent);
+  border: 4px solid black;
+}
+
+.loader-text {
+  font-family: var(--font-display);
+  font-style: var(--font-style-brand);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: black;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.loader-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.loader-dots span {
+  width: 12px;
+  height: 12px;
+  background: var(--color-red);
+  border: 2px solid black;
+  display: inline-block;
+  animation: comicBounce 0.8s infinite ease-in-out;
+}
+
+.loader-dots span:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.loader-dots span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+@keyframes comicBounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  40% {
+    transform: translateY(-8px) rotate(-8deg);
+  }
+}

@@ -33,7 +33,14 @@ const Pagination = ({ count, page, setPage }) => {
           </li>
         )}
         <li className="pagination__item">
-          <button className="pagination__button" onClick={() => setPage(1)}>
+          <button
+            className={
+              page === 1
+                ? "pagination-current__button pagination__button"
+                : "pagination__button"
+            }
+            onClick={() => setPage(1)}
+          >
             1
           </button>
         </li>
@@ -43,7 +50,14 @@ const Pagination = ({ count, page, setPage }) => {
 
         {middlePages.map((elt) => (
           <li key={elt}>
-            <button className="pagination__button" onClick={() => setPage(elt)}>
+            <button
+              className={
+                page === elt
+                  ? "pagination-current__button pagination__button"
+                  : "pagination__button"
+              }
+              onClick={() => setPage(elt)}
+            >
               {elt}
             </button>
           </li>
@@ -56,7 +70,11 @@ const Pagination = ({ count, page, setPage }) => {
         {totalPages > 1 && (
           <li className="pagination__item">
             <button
-              className="pagination__button"
+              className={
+                page === totalPages
+                  ? "pagination-current__button pagination__button"
+                  : "pagination__button"
+              }
               onClick={() => setPage(totalPages)}
             >
               {totalPages}
