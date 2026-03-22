@@ -28,6 +28,8 @@ const addToFavorites = async (favorite_type, id) => {
         }
       }
     }
+  } else {
+    return { sucess: false, message: "Please log in to add favorites" };
   }
 };
 
