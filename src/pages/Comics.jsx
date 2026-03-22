@@ -30,7 +30,11 @@ const ComicsPage = () => {
         });
 
         setCount(response.data.count);
-        setComics(response.data.results);
+        setComics(
+          response.data.results.sort((a, b) => {
+            return a["title"].localeCompare(b["title"]);
+          }),
+        );
 
         setIsLoading(false);
       } catch (error) {
