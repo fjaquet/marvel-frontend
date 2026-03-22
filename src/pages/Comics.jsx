@@ -61,7 +61,7 @@ const ComicsPage = () => {
               {comics.map((elt) => (
                 <div className="listing-card" key={elt._id}>
                   <ComicCard
-                    picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                    picture={`${elt.thumbnail.path}/portrait_uncanny.${elt.thumbnail.extension}`}
                     title={elt.title}
                     description={elt.description}
                   />

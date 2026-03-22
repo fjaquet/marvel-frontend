@@ -118,7 +118,7 @@ const FavoritesPage = () => {
                 <div className="listing-card" key={elt._id}>
                   <Link className="listing-link" to={`/character/${elt._id}`}>
                     <CharacterCard
-                      picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                      picture={`${elt.thumbnail.path}/portrait_uncanny.${elt.thumbnail.extension}`}
                       name={elt.name}
                       description={elt.description}
                     />
@@ -143,7 +143,7 @@ const FavoritesPage = () => {
             {favoriteComics.map((elt) => (
               <div className="listing-card" key={elt._id}>
                 <ComicCard
-                  picture={`${elt.thumbnail.path}.${elt.thumbnail.extension}`}
+                  picture={`${elt.thumbnail.path}/portrait_uncanny.${elt.thumbnail.extension}`}
                   title={elt.title}
                   description={elt.description}
                 />
