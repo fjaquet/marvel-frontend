@@ -7,6 +7,7 @@ import addToFavorites from "../utils/manageFavorites";
 import "../styles/pages/shared/listing.css";
 import "../styles/pages/character.css";
 import "../styles/pages/shared/messages.css";
+import Loader from "../components/Loader";
 
 const CharacterPage = () => {
   const { id } = useParams();
@@ -56,7 +57,7 @@ const CharacterPage = () => {
     <>
       {isLoading ? (
         <main className="characters-page">
-          <p>Is loading...</p>
+          <Loader />
         </main>
       ) : (
         <main className="characters-page">

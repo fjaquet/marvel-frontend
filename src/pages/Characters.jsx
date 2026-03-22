@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import addToFavorites from "../utils/manageFavorites";
+import Loader from "../components/Loader";
 
 const CharactersPage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +45,7 @@ const CharactersPage = () => {
     <>
       {isLoading ? (
         <main className="listing-page">
-          <p>Is loading...</p>
+          <Loader />
         </main>
       ) : (
         <main className="listing-page">

@@ -6,6 +6,7 @@ import "../styles/pages/shared/messages.css";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 import addToFavorites from "../utils/manageFavorites";
+import Loader from "../components/Loader";
 
 const ComicsPage = () => {
   const VITE_API_PROTOCOL = import.meta.env.VITE_API_PROTOCOL;
@@ -43,7 +44,7 @@ const ComicsPage = () => {
     <>
       {isLoading ? (
         <main className="listing-page">
-          <p>Is loading...</p>
+          <Loader />
         </main>
       ) : (
         <main className="listing-page">

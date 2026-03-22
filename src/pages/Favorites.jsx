@@ -7,6 +7,7 @@ import ComicCard from "../components/ComicCard";
 import { Link } from "react-router-dom";
 import "../styles/pages/shared/listing.css";
 import "../styles/pages/favorites.css";
+import Loader from "../components/Loader";
 
 const FavoritesPage = () => {
   const token = Cookies.get("56879_marvel_access_token");
@@ -103,7 +104,7 @@ const FavoritesPage = () => {
     isLoading ? (
       <main className="listing-page">
         <div className="container characters-container favorites-container">
-          <p>Is loading...</p>
+          <Loader />
         </div>
       </main>
     ) : (
